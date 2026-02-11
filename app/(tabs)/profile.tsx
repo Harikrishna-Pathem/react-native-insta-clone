@@ -1,23 +1,30 @@
-import React from "react";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useState } from "react";
 import {
-  CollapsibleTabView,
-  Tabs,
-} from "react-native-collapsible-tab-view";
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import pic from "@/assets/images/dummy-profile.jpg";
 import HighLights from "../components/ProfileComponents/HighLights";
-
-const HEADER_HEIGHT = 260; // adjust as needed
+import ProfilePosts from "../components/ProfileComponents/ProfilePosts";
 
 export default function ProfileScreen() {
+  const [activeTab, setActiveTab] = useState<"Posts" | "Saved" | "Tagged">(
+    "Posts",
+  );
+
   const renderHeader = () => (
     <View style={styles.header}>
-      {/* Profile picture and stats */}
+      {/* Top row */}
       <View style={styles.topRow}>
-        <Image style={styles.profilePic} source={pic} />
-        <View style={{ flex: 1, marginLeft: 15 }}>
+        <Image source={pic} style={styles.profilePic} />
+        <View style={styles.statsContainer}>
           <Text style={styles.name}>Harikrishna Pathem</Text>
+
           <View style={styles.statsRow}>
             <View>
               <Text style={styles.statValue}>0</Text>
@@ -35,78 +42,184 @@ export default function ProfileScreen() {
         </View>
       </View>
 
+      {/* Bio */}
       <Text style={styles.bio}>Oka manchi bio</Text>
 
+      {/* Buttons */}
       <View style={styles.buttonsRow}>
-        <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>Edit Profile</Text></TouchableOpacity>
-        <TouchableOpacity style={styles.button}><Text style={styles.buttonText}>Share Profile</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Edit Profile</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.buttonText}>Share Profile</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.smallButton}>
-          <Ionicons name="person-add-outline" size={20} color={"white"} />
+          <Ionicons name="person-add-outline" size={20} color="white" />
         </TouchableOpacity>
       </View>
 
+      {/* Highlights */}
       <HighLights />
+
+      {/* Tabs */}
+      <View style={styles.tabBar}>
+        {["Posts", "Saved", "Tagged"].map((tab) => (
+          <TouchableOpacity
+            key={tab}
+            style={[styles.tabItem, activeTab === tab && styles.activeTabItem]}
+            onPress={() => setActiveTab(tab as any)}
+          >
+            <Text
+              style={[
+                styles.tabText,
+                activeTab === tab && styles.activeTabText,
+              ]}
+            >
+              {tab}
+            </Text>
+          </TouchableOpacity>
+        ))}
+      </View>
     </View>
   );
 
+  const renderContent = () => {
+    if (activeTab === "Posts") {
+      return <ProfilePosts />;
+    }
+
+    if (activeTab === "Saved") {
+      return <Text style={styles.placeholderText}>Saved Content</Text>;
+    }
+
+    return <Text style={styles.placeholderText}>Tagged Content</Text>;
+  };
+
   return (
-    <CollapsibleTabView
-      renderHeader={renderHeader}
-      headerHeight={HEADER_HEIGHT}
-      containerStyle={{ backgroundColor: "#030303" }}
-    >
-      <Tabs.FlatList
-        name="Posts"
-        data={[1, 2, 3, 4, 5, 6]}
-        keyExtractor={(i) => i.toString()}
-        renderItem={({ item }) => (
-          <View style={{ height: 300, marginBottom: 10, backgroundColor: "#222" }}>
-            <Text style={{ color: "white", padding: 10 }}>Post #{item}</Text>
-          </View>
-        )}
-      />
-
-      <Tabs.ScrollView name="Saved" style={{ flex: 1 }}>
-        <Text style={{ color: "white", padding: 20 }}>Saved Content</Text>
-      </Tabs.ScrollView>
-
-      <Tabs.ScrollView name="Tagged" style={{ flex: 1 }}>
-        <Text style={{ color: "white", padding: 20 }}>Tagged Content</Text>
-      </Tabs.ScrollView>
-    </CollapsibleTabView>
+    <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+      {renderHeader()}
+      {renderContent()}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
+  container: {
+    flex: 1,
     backgroundColor: "#030303",
-    padding: 15,
   },
-  topRow: { flexDirection: "row", alignItems: "center" },
-  profilePic: { width: 80, height: 80, borderRadius: 50 },
-  name: { color: "white", fontSize: 16, marginBottom: 10 },
+
+  /* Header */
+  header: {
+    padding: 15,
+    backgroundColor: "#030303",
+  },
+  topRow: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  profilePic: {
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+  },
+  statsContainer: {
+    flex: 1,
+    marginLeft: 15,
+  },
+  name: {
+    color: "white",
+    fontSize: 16,
+    marginBottom: 8,
+    fontWeight: "600",
+  },
   statsRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     width: 200,
+  },
+  statValue: {
+    color: "white",
+    fontWeight: "600",
+    fontSize: 17,
+    textAlign: "center",
+  },
+  statLabel: {
+    color: "#cfcfcf",
+    fontSize: 13,
+    textAlign: "center",
+  },
+  bio: {
+    color: "white",
     marginTop: 10,
   },
-  statValue: { color: "white", fontWeight: "600", fontSize: 17 },
-  statLabel: { color: "white", fontWeight: "400" },
-  bio: { color: "white", marginTop: 10 },
-  buttonsRow: { flexDirection: "row", marginTop: 10 },
-  button: {
-    backgroundColor: "#282828ff",
-    borderRadius: 6,
-    marginRight: 5,
-    paddingVertical: 5,
-    paddingHorizontal: 10,
+
+  /* Buttons */
+  buttonsRow: {
+    flexDirection: "row",
+    marginTop: 12,
+    alignItems: "center",
   },
-  buttonText: { color: "white", textAlign: "center", fontWeight: "600" },
-  smallButton: {
-    backgroundColor: "#282828ff",
+  button: {
+    backgroundColor: "#282828",
     borderRadius: 6,
-    paddingVertical: 5,
-    paddingHorizontal: 7,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    marginRight: 6,
+  },
+  buttonText: {
+    color: "white",
+    fontWeight: "600",
+  },
+  smallButton: {
+    backgroundColor: "#282828",
+    borderRadius: 6,
+    padding: 6,
+  },
+
+  /* Tabs */
+  tabBar: {
+    flexDirection: "row",
+    marginTop: 15,
+    borderTopWidth: 0.5,
+    borderBottomWidth: 0.5,
+    borderColor: "#222",
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: "center",
+    paddingVertical: 10,
+  },
+  activeTabItem: {
+    borderBottomWidth: 2,
+    borderColor: "white",
+  },
+  tabText: {
+    color: "#777",
+    fontWeight: "500",
+  },
+  activeTabText: {
+    color: "white",
+    fontWeight: "600",
+  },
+
+  /* Grid */
+  grid: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+  },
+  gridItem: {
+    width: "33.33%",
+    aspectRatio: 1,
+    backgroundColor: "#222",
+    borderWidth: 0.5,
+    borderColor: "#111",
+  },
+
+  placeholderText: {
+    color: "white",
+    padding: 20,
   },
 });

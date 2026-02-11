@@ -110,4 +110,38 @@ export const styles = StyleSheet.create({
     paddingTop: 8,
     minHeight: 40,
   },
+  previewWrapper: {
+    width: "100%",
+    height: 400,
+    backgroundColor: "#000",
+  },
+
+  
+
+  captionRow: {
+    flexDirection: "row",
+    padding: 15,
+    gap: 12,
+    borderBottomWidth: 0.5,
+    borderColor: "#222",
+  },
+
+
+  optionsContainer: {
+    marginTop: 10,
+  },
+
+  optionRow: {
+    paddingVertical: 14,
+    paddingHorizontal: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    borderBottomWidth: 0.5,
+    borderColor: "#222",
+  },
+
+  optionText: {
+    color: COLORS.white,
+    fontSize: 16,
+  },
 });
