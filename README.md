@@ -77,13 +77,13 @@ react-native-insta-clone/
 <img src="screenshots/insta-2.jpeg" width="40%" />
 
 ### ➕ Create Post
-<img src="screenshots/insta-3.jpeg" width="40%" />
-
-### 🔖 Bookmarks
 <img src="screenshots/insta-4.jpeg" width="40%" />
 
-### 🔔 Notifications
+### 🔖 Bookmarks
 <img src="screenshots/insta-5.jpeg" width="40%" />
+
+### 🔔 Notifications
+<img src="screenshots/insta-3.jpeg" width="40%" />
 
 
 ## 🚀 Getting Started
