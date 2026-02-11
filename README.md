@@ -69,21 +69,22 @@ react-native-insta-clone/
 ```
 ## 📸 Screenshots
 
-### 🏠 Home Feed
-<img src="screenshots/insta-1.jpeg" width="40%" />
+### 🏠 Home Feed & 👤 Profile
+<p align="center">
+  <img src="screenshots/insta-1.jpeg" width="40%" />
+  <img src="screenshots/insta-2.jpeg" width="40%" />
+</p>
 
-
-### 👤 Profile
-<img src="screenshots/insta-2.jpeg" width="40%" />
-
-### ➕ Create Post
-<img src="screenshots/insta-4.jpeg" width="40%" />
-
-### 🔖 Bookmarks
-<img src="screenshots/insta-5.jpeg" width="40%" />
+### ➕ Create Post & 🔖 Bookmarks
+<p align="center">
+  <img src="screenshots/insta-4.jpeg" width="40%" />
+  <img src="screenshots/insta-5.jpeg" width="40%" />
+</p>
 
 ### 🔔 Notifications
-<img src="screenshots/insta-3.jpeg" width="40%" />
+<p align="center">
+  <img src="screenshots/insta-3.jpeg" width="40%" />
+</p>
 
 
 ## 🚀 Getting Started
